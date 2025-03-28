@@ -2,7 +2,7 @@ import classes from "./EventItem.module.css";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { HiMiniCalendarDateRange } from "react-icons/hi2";
 import { FaLocationDot } from "react-icons/fa6";
-import Link from "next/link";
+import Button from "../ui/Button";
 
 function EventItem(props) {
   const { event } = props;
@@ -32,7 +32,12 @@ function EventItem(props) {
           </div>
         </div>
         <div className={classes.actions}>
-          <Link href={link}>Explore event</Link>
+          <Button link={link}>
+            <span>Explore event</span>{" "}
+            <span className={classes.icon}>
+              <FaArrowRightLong />
+            </span>
+          </Button>
         </div>
       </div>
     </li>
