@@ -2,6 +2,7 @@
 import EventList from "@/components/events/EventList";
 import { useParams } from "next/navigation";
 import { getFilteredEvents } from "../../../../dummy-data";
+import ResultsTitle from "@/components/events/ResultsTitle";
 
 const FilteredEvents = () => {
   const { slug } = useParams();
@@ -35,11 +36,13 @@ const FilteredEvents = () => {
   if (!filteredEvents || filteredEvents.length === 0) {
     return <p>No events found for this filter</p>;
   }
+  const date = new Date(numYear, numMonth - 1);
 
   return (
-    <div>
+    <>
+      <ResultsTitle date={date} />
       <EventList items={filteredEvents} />
-    </div>
+    </>
   );
 };
 
