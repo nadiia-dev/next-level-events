@@ -7,7 +7,6 @@ import EventContent from "@/components/event-detail/EventContent";
 
 const EventDetailPage = () => {
   const { eventId } = useParams();
-  console.log(eventId);
 
   const curEvent = getEventById(eventId);
 
