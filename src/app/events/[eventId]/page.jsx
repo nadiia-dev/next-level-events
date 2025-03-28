@@ -4,6 +4,7 @@ import { getEventById } from "../../../../dummy-data";
 import EventSummary from "@/components/event-detail/EventSummary";
 import EventLogistics from "@/components/event-detail/EventLogistics";
 import EventContent from "@/components/event-detail/EventContent";
+import ErrorAlert from "@/components/ui/ErrorAlert";
 
 const EventDetailPage = () => {
   const { eventId } = useParams();
@@ -11,7 +12,11 @@ const EventDetailPage = () => {
   const curEvent = getEventById(eventId);
 
   if (!curEvent) {
-    return <p>Could not find event</p>;
+    return (
+      <ErrorAlert>
+        <p>Could not find event</p>
+      </ErrorAlert>
+    );
   }
   return (
     <>

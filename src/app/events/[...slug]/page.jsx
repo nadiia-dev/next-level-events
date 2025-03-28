@@ -3,6 +3,8 @@ import EventList from "@/components/events/EventList";
 import { useParams } from "next/navigation";
 import { getFilteredEvents } from "../../../../dummy-data";
 import ResultsTitle from "@/components/events/ResultsTitle";
+import ErrorAlert from "@/components/ui/ErrorAlert";
+import Button from "@/components/ui/Button";
 
 const FilteredEvents = () => {
   const { slug } = useParams();
@@ -25,7 +27,16 @@ const FilteredEvents = () => {
     numMonth < 1 ||
     numMonth > 12
   ) {
-    return <p className="center">Invalid filter</p>;
+    return (
+      <>
+        <ErrorAlert>
+          <p>Invalid filter</p>
+        </ErrorAlert>
+        <div className="center">
+          <Button link="/events">Show all events</Button>
+        </div>
+      </>
+    );
   }
 
   const filteredEvents = getFilteredEvents({
@@ -34,7 +45,16 @@ const FilteredEvents = () => {
   });
 
   if (!filteredEvents || filteredEvents.length === 0) {
-    return <p>No events found for this filter</p>;
+    return (
+      <>
+        <ErrorAlert>
+          <p>No events found for this filter</p>
+        </ErrorAlert>
+        <div className="center">
+          <Button link="/events">Show all events</Button>
+        </div>
+      </>
+    );
   }
   const date = new Date(numYear, numMonth - 1);
 
