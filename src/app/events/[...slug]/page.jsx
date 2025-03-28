@@ -1,13 +1,15 @@
 "use client";
 import EventList from "@/components/events/EventList";
 import { useParams } from "next/navigation";
-import { getFilteredEvents } from "../../../../dummy-data";
 import ResultsTitle from "@/components/events/ResultsTitle";
 import ErrorAlert from "@/components/ui/ErrorAlert";
 import Button from "@/components/ui/Button";
+import { useEffect, useState } from "react";
 
 const FilteredEvents = () => {
   const { slug } = useParams();
+  const [filteredEvents, setFilteredEvents] = useState();
+  const [error, setError] = useState();
 
   if (!slug) {
     return <p className="center">Loading...</p>;
@@ -39,12 +41,24 @@ const FilteredEvents = () => {
     );
   }
 
-  const filteredEvents = getFilteredEvents({
-    year: numYear,
-    month: numMonth,
-  });
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const res = await fetch(`/api/events/${numYear}/${numMonth}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch events");
+        }
+        const data = await res.json();
+        setFilteredEvents(data);
+        setError(null);
+      } catch (err) {
+        setError(err.message);
+      }
+    }
+    fetchEvents();
+  }, []);
 
-  if (!filteredEvents || filteredEvents.length === 0) {
+  if (error) {
     return (
       <>
         <ErrorAlert>
@@ -60,8 +74,12 @@ const FilteredEvents = () => {
 
   return (
     <>
-      <ResultsTitle date={date} />
-      <EventList items={filteredEvents} />
+      {filteredEvents && (
+        <>
+          <ResultsTitle date={date} />
+          <EventList items={filteredEvents} />
+        </>
+      )}
     </>
   );
 };

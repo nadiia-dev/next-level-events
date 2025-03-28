@@ -14,7 +14,7 @@ function EventItem(props) {
   });
 
   const formattedAddress = event.location.replace(", ", "\n");
-  const link = `/events/${event.id}`;
+  const link = `/events/${event._id}`;
 
   return (
     <li className={classes.item}>
