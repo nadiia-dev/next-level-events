@@ -19,27 +19,11 @@ function Comments(props) {
   useEffect(() => {
     async function fetchComments() {
       setIsLoading(true);
-      context.showNotification({
-        title: "Pending...",
-        message: "Response is on it`s way",
-        status: "pending",
-      });
       try {
         const res = await fetch(`/api/events/${eventId}/comment`);
-        if (res.ok) {
-          context.showNotification({
-            title: "Success...",
-            message: "Successfully added your comment!",
-            status: "success",
-          });
-          setIsLoading(false);
-          const data = await res.json();
-          setComments(data);
-          return data;
-        } else {
-          setIsLoading(false);
-          throw new Error(res.message || "Something went wrong");
-        }
+        const data = await res.json();
+        setIsLoading(false);
+        setComments(data);
       } catch (e) {
         setIsLoading(false);
         context.showNotification({
@@ -58,16 +42,38 @@ function Comments(props) {
     setShowComments((prevStatus) => !prevStatus);
   }
 
-  function addCommentHandler(commentData) {
-    fetch(`/api/events/${eventId}/comment`, {
-      method: "POST",
-      body: JSON.stringify(commentData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
+  async function addCommentHandler(commentData) {
+    context.showNotification({
+      title: "Pending...",
+      message: "Response is on it`s way",
+      status: "pending",
+    });
+    try {
+      const res = await fetch(`/api/events/${eventId}/comment`, {
+        method: "POST",
+        body: JSON.stringify(commentData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        context.showNotification({
+          title: "Success...",
+          message: "Successfully added your comment!",
+          status: "success",
+        });
+        const data = await res.json();
+        return data;
+      } else {
+        throw new Error(res.message || "Something went wrong");
+      }
+    } catch (e) {
+      context.showNotification({
+        title: "Error...",
+        message: e.message || "Something went wrong",
+        status: "error",
+      });
+    }
   }
 
   return (
