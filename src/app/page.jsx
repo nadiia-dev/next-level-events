@@ -1,4 +1,5 @@
 import EventList from "@/components/events/EventList";
+import NewsletterRegistration from "@/components/input/NewsletterRegistration";
 
 async function getFeaturedEvents() {
   const res = await fetch(
@@ -16,6 +17,7 @@ async function HomePage() {
   const featuredEvents = await getFeaturedEvents();
   return (
     <div>
+      <NewsletterRegistration />
       <EventList items={featuredEvents} />
     </div>
   );

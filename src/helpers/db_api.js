@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import event from "../models/eventModel";
 import comment from "../models/commentModel";
+import newsletter from "../models/newsletterModel";
 
 export async function connectDatabase() {
   const DB_URL = process.env.DB_URL;
@@ -55,4 +56,9 @@ export async function postEventComment({ eventId, name, email, message }) {
 export async function getEventComments(id) {
   const documents = await comment.find({ eventId: id }).sort({ _id: -1 });
   return documents;
+}
+
+export async function registerNewsletter(email) {
+  const document = await newsletter.create({ email });
+  return document;
 }
