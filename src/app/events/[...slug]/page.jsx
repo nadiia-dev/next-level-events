@@ -17,6 +17,15 @@ const fetchEvents = async (numYear, numMonth) => {
   }
 };
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+
+  return {
+    title: "Filtered Events",
+    description: `All events for ${slug[1]}/${slug[0]}.`,
+  };
+}
+
 const FilteredEvents = async ({ params }) => {
   const slug = await params.slug;
 

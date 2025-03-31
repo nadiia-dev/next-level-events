@@ -1,6 +1,11 @@
 import EventList from "@/components/events/EventList";
 import NewsletterRegistration from "@/components/input/NewsletterRegistration";
 
+export const metadata = {
+  title: "Next Level Events",
+  description: "Find a lot of great events that allow you to evolve...",
+};
+
 async function getFeaturedEvents() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/events/featured`,

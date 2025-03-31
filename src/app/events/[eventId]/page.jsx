@@ -15,6 +15,17 @@ const fetchEvents = async (eventId) => {
   return res.json();
 };
 
+export async function generateMetadata({ params }) {
+  const { eventId } = await params;
+
+  const event = await fetchEvents(eventId);
+
+  return {
+    title: event.title,
+    description: event.description,
+  };
+}
+
 const EventDetailPage = async ({ params }) => {
   const eventId = await params.eventId;
   const curEvent = await fetchEvents(eventId);
