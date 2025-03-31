@@ -53,6 +53,6 @@ export async function postEventComment({ eventId, name, email, message }) {
 }
 
 export async function getEventComments(id) {
-  const documents = await comment.find({ eventId: id });
+  const documents = await comment.find({ eventId: id }).sort({ _id: -1 });
   return documents;
 }

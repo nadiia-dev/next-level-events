@@ -5,6 +5,7 @@ import EventLogistics from "@/components/event-detail/EventLogistics";
 import EventContent from "@/components/event-detail/EventContent";
 import ErrorAlert from "@/components/ui/ErrorAlert";
 import { useEffect, useState } from "react";
+import Comments from "@/components/input/Comments";
 
 const EventDetailPage = () => {
   const { eventId } = useParams();
@@ -45,6 +46,7 @@ const EventDetailPage = () => {
       <EventContent>
         <p>{curEvent.description}</p>
       </EventContent>
+      <Comments eventId={eventId} />
     </>
   );
 };
