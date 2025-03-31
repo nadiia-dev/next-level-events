@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import event from "../models/eventModel";
+import comment from "../models/commentModel";
 
 export async function connectDatabase() {
   const DB_URL = process.env.DB_URL;
@@ -44,4 +45,14 @@ export async function getFilteredEvents(year, month) {
   });
 
   return filteredEvents;
+}
+
+export async function postEventComment({ eventId, name, email, message }) {
+  const newDocument = await comment.create({ eventId, name, email, message });
+  return newDocument;
+}
+
+export async function getEventComments(id) {
+  const documents = await comment.find({ eventId: id });
+  return documents;
 }
