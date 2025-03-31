@@ -1,31 +1,23 @@
-"use client";
-import { useParams } from "next/navigation";
 import EventSummary from "@/components/event-detail/EventSummary";
 import EventLogistics from "@/components/event-detail/EventLogistics";
 import EventContent from "@/components/event-detail/EventContent";
 import ErrorAlert from "@/components/ui/ErrorAlert";
-import { useEffect, useState } from "react";
 import Comments from "@/components/input/Comments";
 
-const EventDetailPage = () => {
-  const { eventId } = useParams();
-  const [curEvent, setCurEvent] = useState();
+const fetchEvents = async (eventId) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${eventId}`
+  );
 
-  useEffect(() => {
-    async function fetchEvents() {
-      try {
-        const res = await fetch(`/api/events/${eventId}`);
-        if (!res.ok) {
-          throw new Error("Failed to fetch events");
-        }
-        const data = await res.json();
-        setCurEvent(data);
-      } catch (err) {
-        console.error(err.message);
-      }
-    }
-    fetchEvents();
-  }, []);
+  if (!res.ok) {
+    throw new Error("Failed to fetch events");
+  }
+  return res.json();
+};
+
+const EventDetailPage = async ({ params }) => {
+  const eventId = await params.eventId;
+  const curEvent = await fetchEvents(eventId);
 
   if (!curEvent) {
     return (

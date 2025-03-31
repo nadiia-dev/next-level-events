@@ -1,38 +1,18 @@
-"use client";
 import EventList from "@/components/events/EventList";
 import EventSearch from "@/components/events/EventSearch";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
-const EventsList = () => {
-  const [events, setEvents] = useState([]);
-  const router = useRouter();
+const EventsList = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/events`);
 
-  useEffect(() => {
-    async function fetchEvents() {
-      try {
-        const res = await fetch("/api/events");
-        if (!res.ok) {
-          throw new Error("Failed to fetch events");
-        }
-        const data = await res.json();
-        setEvents(data);
-      } catch (err) {
-        console.error(err.message);
-      }
-    }
-    fetchEvents();
-  }, []);
+  if (!res.ok) {
+    throw new Error("Failed to fetch events");
+  }
 
-  const searchHandler = (year, month) => {
-    const path = `/events/${year}/${month}`;
-
-    router.push(path);
-  };
+  const events = await res.json();
 
   return (
     <div>
-      <EventSearch onSearch={searchHandler} />
+      <EventSearch />
       <EventList items={events} />
     </div>
   );

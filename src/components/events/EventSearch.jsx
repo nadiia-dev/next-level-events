@@ -1,14 +1,19 @@
+"use client";
 import { useRef } from "react";
 import Button from "../ui/Button";
 import classes from "./EventSearch.module.css";
+import { useRouter } from "next/navigation";
 
-const EventSearch = (props) => {
+const EventSearch = () => {
+  const router = useRouter();
   const yearRef = useRef();
   const monthRef = useRef();
+
   const submitHandler = (e) => {
     e.preventDefault();
-    props.onSearch(yearRef.current.value, monthRef.current.value);
+    router.push(`/events/${yearRef.current.value}/${monthRef.current.value}`);
   };
+
   return (
     <form className={classes.form} onSubmit={submitHandler}>
       <div className={classes.controls}>

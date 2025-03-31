@@ -1,15 +1,24 @@
-"use client";
 import EventList from "@/components/events/EventList";
-import { useParams } from "next/navigation";
 import ResultsTitle from "@/components/events/ResultsTitle";
 import ErrorAlert from "@/components/ui/ErrorAlert";
 import Button from "@/components/ui/Button";
-import { useEffect, useState } from "react";
 
-const FilteredEvents = () => {
-  const { slug } = useParams();
-  const [filteredEvents, setFilteredEvents] = useState();
-  const [error, setError] = useState();
+const fetchEvents = async (numYear, numMonth) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${numYear}/${numMonth}`
+    );
+    if (!res.ok) {
+      throw new Error("Failed to fetch events");
+    }
+    return res.json();
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
+const FilteredEvents = async ({ params }) => {
+  const slug = await params.slug;
 
   if (!slug) {
     return <p className="center">Loading...</p>;
@@ -40,25 +49,9 @@ const FilteredEvents = () => {
       </>
     );
   }
+  const filteredEvents = await fetchEvents(numYear, numMonth);
 
-  useEffect(() => {
-    async function fetchEvents() {
-      try {
-        const res = await fetch(`/api/events/${numYear}/${numMonth}`);
-        if (!res.ok) {
-          throw new Error("Failed to fetch events");
-        }
-        const data = await res.json();
-        setFilteredEvents(data);
-        setError(null);
-      } catch (err) {
-        setError(err.message);
-      }
-    }
-    fetchEvents();
-  }, []);
-
-  if (error) {
+  if (!filteredEvents || filteredEvents.length === 0) {
     return (
       <>
         <ErrorAlert>
