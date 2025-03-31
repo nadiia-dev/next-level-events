@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Level Events
+
+Next Level Events is a web application designed to help users discover and explore various events. Built with Next.js, it offers a seamless and dynamic user experience.
+
+## Features
+
+- **Event Listings**: Browse a comprehensive list of upcoming events.
+- **Event Search**: Filter events by year and month to find exactly what you're looking for.
+- **Event Details**: View detailed information about each event, including date, location, and description.
+- **Comments Section**: Engage with other users by reading and posting comments on event pages.
+
+## Technologies Used
+
+- **Next.js**: A React framework for server-rendered applications.
+- **React**: A JavaScript library for building user interfaces.
+- **CSS Modules**: For styling components in a modular and maintainable way.
+- **MongoDb**: A NoSQL database for storing event data.
+- **Mongoose**: An ODM (Object Data Modeling) library for MongoDB.
 
 ## Getting Started
 
-First, run the development server:
+To get a local copy up and running, follow these steps:
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (v14 or later)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
+
+### Installation
+
+1. **Clone the repository**:
+
+```bash
+git clone https://github.com/nadiia-dev/next-level-events.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+cd next-level-events
+```
+
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+4. Set up environment variables:
+
+Create a .env file in the root directory and define the necessary environment variables.
+
+```env
+DB_URL= #your mongodb connection url
+NEXT_PUBLIC_BASE_URL= #your app url
+```
+
+5. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 in your browser to view the application.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is deployed on Vercel.
