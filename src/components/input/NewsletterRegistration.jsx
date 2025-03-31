@@ -56,9 +56,9 @@ function NewsletterRegistration() {
             name="email"
             id="email"
             placeholder="Your email"
-            suppressHydrationWarning
+            // suppressHydrationWarning
           />
-          <button suppressHydrationWarning>Register</button>
+          <button>Register</button>
         </div>
       </form>
       {activeNotification && (
